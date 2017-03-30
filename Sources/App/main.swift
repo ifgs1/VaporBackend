@@ -2,7 +2,7 @@ import Vapor
 import VaporPostgreSQL
 
 let drop = Droplet(
-    preparations: [Acronym.self],
+    preparations: [Acronym.self, User.self],
     providers: [VaporPostgreSQL.Provider.self]
 )
 
@@ -33,5 +33,6 @@ drop.get("test") { request in
     return try JSON(node:Acronym.all().makeNode())
 }
 
-
+let userController = UserRegistrationLoginController()
+userController.addRoutes(to: drop)
 drop.run()
